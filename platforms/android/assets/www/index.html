@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <title>Hello World</title>
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" >
+//	    document.addEventListener("devideready",onDeviceReady,fale);
+//	    function onDeviceReady(){
+//		alert("cxordova success");
+//	    }
+
+	    document.addEventListener("deviceready", onDeviceReady, false);
+	    var db;
+	    function onDeviceReady() {
+			//	console.log("console.log works well");
+		//console.log(device.cordova);
+		db = window.sqlitePlugin.openDatabase({name: "DB"});
+		// db = window.openDatabase("Teste", "1.0", "Phonegap DB", 20000);
+		
+		console.log("console.log works well");
+		
+		
+		
+	    }
+	    
+	    
+	     alert (db);
+	    
+		 db.transaction(function(tx) {
+		    
+      tx.executeSql("INSERT INTO test_table (data, data_num) VALUES (?,?)", ["test", 100], function(tx, res) {
+          console.log("insertId: " + res.insertId + " -- probably 1");
+          console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
+        });
+}); 
+db.transaction(function(tx) {
+            tx.executeSql("select count(id) as cnt from test_table;", [], function(tx, res) {
+              console.log("res.rows.length: " + res.rows.length + " -- should be 1");
+              console.log("res.rows.item(0).cnt: " + res.rows.item(0).cnt + " -- should be 1");
+            });
+   });
+	    function inseriNome() {
+	function inseriNome() {
+            db.transaction(geraNomeDB, errorCB, successCB);
+            }
+	    
+function geraNomeDB(tx) {
+            var nomeInserido = new String(document.getElementById('idInsiraNome').value);
+	    db = window.sqlitePlugin.openDatabase({name: "DB"});
+            tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (data)');
+            tx.executeSql('INSERT INTO DEMO (data) VALUES ("'+nomeInserido+'")');
+        }function buscaNomes() {
+            db.transaction(queryDB, errorCB);
+        }
+        function queryDB(tx) {
+            tx.executeSql('SELECT * FROM DEMO', [], querySuccess, errorCB);
+        }
+ 
+        function querySuccess(tx, results) {
+            var len = results.rows.length;
+            console.log("DEMO table: " + len + " rows found.");
+            for (var i=0; i<len; i++){
+                console.log("Row = " + i + " Data =  " + results.rows.item(i).data);
+                alert("Row = " + i + " Nome =  " + results.rows.item(i).data);
+            }
+        }
+        function errorCB(err) {
+            console.log("Error processing SQL: "+err.code);
+        }
+        function successCB() {
+            alert("Executado com sucesso!");
+        }
+		
+	    }
+//	    function changeText(){
+//		
+//	document.getElementById('boldStuff').innerHTML = 'Fred Flinstone';
+//}
+
+
+	</script>
+    </head>
+    <body>
+	<h1>CRUD no Phonegap</h1>
+	<form>
+	    <p>Insira um nome: <input type="text" name="InsiraNome" id="idInsiraNome"></p>
+	    <input type="submit" value="Insira" onclick="inseriNome()">
+	</form>
+	<form>
+	    <p>Delete um nome: <input type="text" name="DeleteNome" id="idDeleteNome"></p>
+	    <input type="submit" value="Deletar" onclick="deleteNome()">
+	</form>
+	</br>
+	<form>
+	    <input type="submit" value="Buscar nomes" onclick="buscaNomes()">
+	    <p>Welcome to the site <b id='boldStuff'>dude</b> </p> 
+<input type='button' onclick='changeText()' value='Change Text'/>
+	</form>
+        </br>
+	<form>
+	    <p>Qual o NOVO nome: <input type="text" name="AlteraNome" id="idAlteraNome"></p>
+	    <p>Qual o ANTIGO nome: <input type="text" name="AntigoNome" id="idAntigoNome"></p>
+	    <input type="submit" value="Alterar" onclick="altereNome()">
+	</form>
+    </body>
+</html>

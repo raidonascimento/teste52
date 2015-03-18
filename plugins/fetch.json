@@ -1,0 +1,14 @@
+{
+    "com.triarc.sqlitePlugin": {
+        "source": {
+            "type": "registry",
+            "id": "com.triarc.sqliteplugin"
+        }
+    },
+    "org.apache.cordova.console": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.console"
+        }
+    }
+}
